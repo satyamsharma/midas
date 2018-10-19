@@ -5,10 +5,10 @@ const socketIo      = require("socket.io");
 const fetch         = require('isomorphic-fetch');
 const mongoose      = require('mongoose');
 const app           = express();
-var Users           = require('../models/UserSchema');
+var Users           = require('./models/UserSchema');
 var bodyParser      = require('body-parser');
 var Sequelize       = require('sequelize');
-var iextrading      = require('../helpers/interactions/iex_interactions');
+var iextrading      = require('./helpers/interactions/iex_interactions');
 
 
 /*******************Basic Setup and Configuration**********************/

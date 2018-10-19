@@ -29,7 +29,10 @@ class ShowPortfolio extends Component {
      return (
         <div>
           <ShowPortfolioValue user={user}/>
-          {portfolioList}
+          <ul>
+          {portfolioList} 
+          </ul>
+       
         </div>
         
       );
