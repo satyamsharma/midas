@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PortfolioTicker from './portfolio-ticker';
 import ShowPortfolioValue from './show-portfolio-value';
+import PropTypes from 'prop-types';
 
 class ShowPortfolio extends Component {
     constructor(props){
@@ -12,6 +13,11 @@ class ShowPortfolio extends Component {
         waitingForUpdate: false
   
       }
+    }
+
+    static propTypes = {
+      user: PropTypes.objectOf(PropTypes.any.isRequired),
+      cashValue: PropTypes.number
     }
   
     render() {

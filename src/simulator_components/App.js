@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import StockPrice from './stock-price';
-import PortfolioTicker from './portfolio-ticker';
-import { updateUserPortfolio } from './user_interactions';
-import { getStockPrice } from './iex_interactions';
-import ShowPortfolioValue from './show-portfolio-value';
-import ShowPortfolio from './show-portfolio';
-import ShowCashValue from './show-cash-value';
+import PortfolioTicker from '../simulator_components/portfolio_components/portfolio-ticker';
+import { updateUserPortfolio } from '../helpers/interactions/user_interactions';
+import { getStockPrice } from '../helpers/interactions/iex_interactions';
+import ShowPortfolioValue from './portfolio_components/show-portfolio-value';
+import ShowPortfolio from './portfolio_components/show-portfolio';
+import ShowCashValue from './portfolio_components/show-cash-value';
+import PropTypes from 'prop-types';
 import './App.css';
 
  //mount scoket io on top of http server
@@ -34,6 +35,10 @@ class App extends Component {
       }
   }
 
+  static propTypes = {
+    userId: PropTypes.number.isRequired
+  }
+
   handleBuy(event){
       event.preventDefault();
 
@@ -46,6 +51,8 @@ class App extends Component {
       //if user has no shares
       if(isEmpty(user.portfolio)){
         //TODO: Calculate average price brought
+        
+        //check
         user.portfolio[ticker] = {
           shares: amountOfSharesToBuy
         }
@@ -160,7 +167,7 @@ class App extends Component {
       var newValue = event.target.value.toLowerCase();
     
       if(newValue == "") {
-        this.setState({value: newValue, response: false})
+        this.setState({value: newValue, response: false}) 
       } else {
         this.setState({value: newValue});
       }
@@ -172,18 +179,22 @@ class App extends Component {
     //if value in input is empty...
     if(this.state.value == "") this.setState({value: "", response: false});
 
+    //check if quote is valid...
+
+
     //get instant quote and update state
     socket.emit('get quote', this.state.value); //works
     socket.on("stock price", data => this.setState({ ticker: this.state.value, responsePrice: data }));
   }
 
   //Store dummy user once the component first renders using the built in componentWillMount() react function.
-  componentWillMount(){
+  componentDidMount(){
         fetch("/api/user/" + this.props.userId)
                 .then((response) => {
                     return response.json();
                 })
                 .then((user) => {
+
                     this.setState({user: user});
                 })
                 .catch((err) => {
@@ -195,6 +206,7 @@ class App extends Component {
   
     var { responsePrice, showPortfolio, buyFailed, sellFailed, user } = this.state;
 
+    console.log("UPDATED RESPONSE PRICE")
     return (
       <div className="App">
         <p>Midas Stock Trading Simulator Prototype</p>
@@ -251,6 +263,7 @@ function isEmpty(obj) {
     }
     return true;
 }
+
 
 
 

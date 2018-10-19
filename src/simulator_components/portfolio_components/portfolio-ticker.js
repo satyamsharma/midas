@@ -1,34 +1,38 @@
 import React, { Component } from 'react';
-import { getUserPortfolio } from './user_interactions';
-import { getStockPrice } from './iex_interactions';
+import { getUserPortfolio } from '../../helpers/interactions/user_interactions';
+import { getStockPrice } from '../../helpers/interactions/iex_interactions';
+import PropTypes from 'prop-types';
 
 export default class PortfolioTicker extends Component {
   constructor(props){
       super(props);
       this.state = {
-        price: 0,
-        shares: 0,
+        shares: this.props.user.portfolio[this.props.ticker].shares,
+        user: this.props.user,
+        ticker: this.props.ticker,
         waitingForUpdate: false
-      }
+      } 
+  }
+
+  static propTypes = {
+    ticker: PropTypes.string.isRequired,
+    user: PropTypes.objectOf(PropTypes.any.isRequired)
   }
 
   componentDidMount(){
     clearInterval(this.interval);
     getTickerPrice(this.props.ticker).then(async (tickerPrice) => {
-      this.setState({
-        user: this.props.user,
-        ticker: this.props.ticker,
-        price: tickerPrice,
-      })
+       this.setState({price: tickerPrice,})
     });
+    
    
   }
-
 
   render(){
   
     if(!this.state.waitingForUpdate){
       this.interval = setInterval(async () => {
+            console.log("UPDATED");
             var newPrice = await getStockPrice(this.state.ticker);
             var user = await getUserPortfolio(this.state.user.id);
             
@@ -39,7 +43,7 @@ export default class PortfolioTicker extends Component {
     }
      
     return (
-        <li>{"Ticker: " + this.state.ticker + " current price: " + this.state.price + " shares owned: " + this.state.shares}</li>
+        <li>{this.state.ticker + " " + this.state.price + " shares owned: " + this.state.shares}</li>
     );
   }
 }
