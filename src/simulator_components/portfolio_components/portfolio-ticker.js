@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { getUserPortfolio } from '../../helpers/interactions/user_interactions';
 import { getStockPrice } from '../../helpers/interactions/iex_interactions';
 import PropTypes from 'prop-types';
+import { List } from 'semantic-ui-react'
 
 export default class PortfolioTicker extends Component {
   constructor(props){
@@ -43,7 +44,12 @@ export default class PortfolioTicker extends Component {
     }
      
     return (
-        <li>{this.state.ticker + " " + this.state.price + " shares owned: " + this.state.shares}</li>
+             <List.Item>
+                  <List.Content>
+                          <List.Header>{this.state.ticker + " " + this.state.price}</List.Header>
+                          {"Shares: " + this.state.shares}
+                  </List.Content>
+             </List.Item>
     );
   }
 }

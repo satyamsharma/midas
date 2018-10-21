@@ -1,0 +1,36 @@
+.welcome {
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 70%; 
+    background-color: #1d2433;
+    background: linear-gradient(#161b27, #323c52);
+}
+
+.heading, .heading-2 {
+    text-align: center;
+    color: #d3a548;
+}
+
+.heading {
+    font-size: 80px;
+}
+
+.heading-2 {
+    font-size: 40px;
+}
+
+.btn-container {
+    text-align: center;
+
+}
+
+.midas-about {
+    height:
+}
+

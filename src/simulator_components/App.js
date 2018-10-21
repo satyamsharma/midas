@@ -245,8 +245,8 @@ class App extends Component {
           </form>
 
 
-          {showPortfolio ? <ShowCashValue cashValue={user.cash} /> : <span>Click button above to see portfolio value</span>}
-          {showPortfolio ? <ShowPortfolio cashValue={user.cash} user={user}/> : <span>Click button above to show portfolio</span>}
+          {showPortfolio ? <ShowCashValue cashValue={user.cash} /> : <span></span>}
+          {showPortfolio ? <ShowPortfolio cashValue={user.cash} user={user}/> : <span></span>}
 
       </div>
     );
