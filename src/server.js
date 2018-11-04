@@ -1,13 +1,14 @@
+require('dotenv').config();
 const express       = require("express");
 const http          = require("http");
 const socketIo      = require("socket.io");
 const fetch         = require('isomorphic-fetch');
 const mongoose      = require('mongoose');
 const app           = express();
-var Users           = require('../models/UserSchema');
+var Users           = require('./models/UserSchema');
 var bodyParser      = require('body-parser');
 var Sequelize       = require('sequelize');
-var iextrading      = require('./iex_interactions');
+var iextrading      = require('./helpers/interactions/iex_interactions');
 
 
 /*******************Basic Setup and Configuration**********************/
@@ -38,15 +39,12 @@ app.use(function(req, res, next) {
 
 /***********************Database Configuration*************************/
 
-//PostgreSQL setup
-const dbUsername = process.env.USER;
-const dbPassword = process.env.PASSWORD;
-var db = "midas";
+console.log(process.env.ENDPOINT);
 
 const sequelize = new Sequelize({
-  database: db,
-  username: dbUsername,
-  password: dbPassword,
+  database: process.env.DBNAME,
+  username: process.env.USER,
+  password: process.env.PASSWORD,
   dialect: 'postgres',
   port: 5433
 });
@@ -128,7 +126,7 @@ io.on("connection", socket => {
 
       socket.on("get quote", (ticker) => {
             if (interval) clearInterval(interval);
-            interval = setInterval(() => getStockPriceAndEmit(socket, ticker), 1000);
+            interval = setInterval(() => getStockPriceAndEmit(socket, ticker), 104);
       });
 
       socket.on("disconnect", () => {
@@ -167,7 +165,7 @@ const getStockPriceAndEmit = async (socket, ticker) => {
 //   raw: true
 // })
 //   .then(data => {
-//   console.log(data[0].portfolio["amd"].shares);
+//   console.log(data[0]);
 // })
 
 

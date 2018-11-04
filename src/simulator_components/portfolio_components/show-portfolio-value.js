@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getUserPortfolio, updateUserPortfolioValue } from './user_interactions';
-import { getStockPrice } from './iex_interactions';
+import { getUserPortfolio, updateUserPortfolioValue } from '../../helpers/interactions/user_interactions';
+import { getStockPrice } from '../../helpers/interactions/iex_interactions';
 
 export default class ShowPortfolioValue extends Component {
     constructor(props){
@@ -20,7 +20,8 @@ export default class ShowPortfolioValue extends Component {
     }
   
     render(){
-  
+      // var { user, portfolioValue } = this.props;
+
       if(!this.state.waitingForUpdate){
   
         this.interval = setInterval(async () => {
@@ -39,7 +40,7 @@ export default class ShowPortfolioValue extends Component {
               updateUserPortfolioValue(user).catch((error) => console.log(error));
       
               this.setState({portfolioValue: Math.round(100*totalPortfolioValue)/100, waitingForUpdate: true})
-         }, 1000);
+         }, 5000);
         }
       return (
           <li>{"Total portfolio value: $" + this.state.portfolioValue}</li>

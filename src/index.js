@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './app';
+import LandingPage from './landingpage'
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App userId={2}/>, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
